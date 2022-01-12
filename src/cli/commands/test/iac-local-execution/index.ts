@@ -43,6 +43,8 @@ import {
 } from './oci-pull';
 import { isValidUrl } from './url-utils';
 import chalk from 'chalk';
+import { IacProjectType } from '../../../../lib/iac/constants';
+const { parseModule } = require('../../../../../release-scripts/hcl-to-json-parser-generator/src/hcltojson/dist/hcltojson');
 
 // this method executes the local processing engine and then formats the results to adapt with the CLI output.
 // this flow is the default GA flow for IAC scanning.
@@ -113,7 +115,35 @@ export async function test(
       );
     }
 
-    const scannedFiles = await scanFiles(parsedFiles);
+    // if (options.experimental) {
+      const files = {};
+      parsedFiles.forEach((file) => {
+        files[file.filePath] = file.fileContent;
+      });
+
+      const moduleConfig = {
+        files,
+        flags: {
+          '-var': 'test1=value1',
+        },
+        env: [
+          'name=value',
+        ],
+      };
+
+      // get parsed JsonContent for all files, in one object
+      const parsedOutputWithVars = parseModule(moduleConfig);
+      // map the jsonContent
+      const finalTFParsedFiles = parsedFiles.map(file => ({
+          ...file,
+          engineType : EngineType.Terraform,
+          jsonContent: JSON.parse(parsedOutputWithVars),
+          projectType: IacProjectType.TERRAFORM,
+      }));
+      console.log("-> finalTFParsedFiles", finalTFParsedFiles);
+
+    // const scannedFiles = await scanFiles(parsedFiles);
+    const scannedFiles = await scanFiles(finalTFParsedFiles);
     const resultsWithCustomSeverities = await applyCustomSeverities(
       scannedFiles,
       iacOrgSettings.customPolicies,
