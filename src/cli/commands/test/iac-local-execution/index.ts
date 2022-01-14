@@ -115,35 +115,7 @@ export async function test(
       );
     }
 
-    // if (options.experimental) {
-      const files = {};
-      parsedFiles.forEach((file) => {
-        files[file.filePath] = file.fileContent;
-      });
-
-      const moduleConfig = {
-        files,
-        flags: {
-          '-var': 'test1=value1',
-        },
-        env: [
-          'name=value',
-        ],
-      };
-
-      // get parsed JsonContent for all files, in one object
-      const parsedOutputWithVars = parseModule(moduleConfig);
-      // map the jsonContent
-      const finalTFParsedFiles = parsedFiles.map(file => ({
-          ...file,
-          engineType : EngineType.Terraform,
-          jsonContent: JSON.parse(parsedOutputWithVars),
-          projectType: IacProjectType.TERRAFORM,
-      }));
-      console.log("-> finalTFParsedFiles", finalTFParsedFiles);
-
-    // const scannedFiles = await scanFiles(parsedFiles);
-    const scannedFiles = await scanFiles(finalTFParsedFiles);
+    const scannedFiles = await scanFiles(parsedFiles);
     const resultsWithCustomSeverities = await applyCustomSeverities(
       scannedFiles,
       iacOrgSettings.customPolicies,
