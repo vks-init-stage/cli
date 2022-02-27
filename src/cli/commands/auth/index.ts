@@ -26,13 +26,11 @@ function resetAttempts() {
   attemptsLeft = isDocker() ? 60 : 3 * 60;
 }
 
-type AuthCliCommands = 'wizard' | 'ignore';
+type AuthCliCommands = 'ignore';
 
 async function webAuth(via: AuthCliCommands) {
   const token = uuidv4(); // generate a random key
-  const redirects = {
-    wizard: '/authenticated',
-  };
+  const redirects = {};
 
   let urlStr = authUrl + '/login?token=' + token;
 
