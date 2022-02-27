@@ -93,17 +93,3 @@ test/tap/sln-app.test.ts @snyk/snyk-open-source
 test/tap/sub-process.test.js @snyk/snyk-open-source
 test/tap/user-config.test.ts @snyk/snyk-open-source
 test/tap/vulnerable-path-output.js @snyk/snyk-open-source
-
-# protect
-test/tap/cli-protect-no-vulns-to-patch.test.ts @snyk/hammer
-test/tap/patch-fetch-fail.test.ts @snyk/hammer
-test/tap/cli-protect.test.ts @snyk/hammer
-test/tap/protect-apply-same-patch-again.test.js @snyk/hammer
-test/tap/protect-config.test.ts @snyk/hammer
-test/tap/protect-factors-pre-tarred.test.ts @snyk/hammer
-test/tap/protect-fail.test.js @snyk/hammer
-test/tap/protect-ignore.test.js @snyk/hammer
-test/tap/protect-patch-filter.test.js @snyk/hammer
-test/tap/protect-patch-order.test.ts @snyk/hammer
-test/tap/protect-patch-same-pkg.test.js @snyk/hammer
-test/tap/protect-semver-patch.test.ts @snyk/hammer
