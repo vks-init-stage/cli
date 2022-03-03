@@ -65,7 +65,7 @@ export interface DriftctlGenDriftIgnoreOptions {
   'exclude-unmanaged'?: boolean;
 }
 
-interface DriftCTLOptions {
+export interface DriftCTLOptions {
   quiet?: true;
   filter?: string;
   to?: string;
@@ -265,19 +265,32 @@ export function translateExitCode(exitCode: number) {
   }
 }
 
-export async function driftctl(args: string[]): Promise<number> {
+export async function driftctl(args: string[]): Promise<ChildProcessResult> {
   debug('running driftctl %s ', args.join(' '));
 
   const path = await findOrDownload();
 
-  const exitCode = await launch(path, args);
+  const { code, stdout } = await launch(path, args);
 
-  return translateExitCode(exitCode);
+  return { code: translateExitCode(code), stdout };
 }
 
-async function launch(path: string, args: string[]): Promise<number> {
-  return new Promise<number>((resolve, reject) => {
-    const child = child_process.spawn(path, args, { stdio: 'inherit' });
+interface ChildProcessResult {
+  code: number;
+  stdout: string;
+}
+
+async function launch(
+  path: string,
+  args: string[],
+): Promise<ChildProcessResult> {
+  return new Promise<ChildProcessResult>((resolve, reject) => {
+    const child = child_process.spawn(path, args, { stdio: 'pipe' });
+
+    let stdout = '';
+    child.stdout.on('data', (chunk) => {
+      stdout += chunk.toString();
+    });
 
     child.on('error', (error) => {
       reject(error);
@@ -288,7 +301,7 @@ async function launch(path: string, args: string[]): Promise<number> {
         //failed to find why this could happen...
         reject(new Error('Process was terminated'));
       } else {
-        resolve(code);
+        resolve({ code, stdout });
       }
     });
   });

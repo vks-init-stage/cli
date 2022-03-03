@@ -3,12 +3,12 @@ import { processCommandArgs } from './process-command-args';
 import { UnsupportedEntitlementCommandError } from './test/iac-local-execution/assert-iac-options-flag';
 import { getIacOrgSettings } from './test/iac-local-execution/measurable-methods';
 import config from '../../lib/config';
-import { driftctl, parseArgs } from '../../lib/iac/drift';
+import { driftctl, DriftCTLOptions, parseArgs } from '../../lib/iac/drift';
 
 const legacyError = require('../../lib/errors/legacy-errors');
 
 export default async function drift(...args: MethodArgs): Promise<any> {
-  const { options, paths } = processCommandArgs(...args);
+  const { options, paths } = processCommandArgs<DriftCTLOptions>(...args);
 
   if (options.iac != true) {
     return legacyError('drift');
