@@ -120,6 +120,7 @@ export const expectedEnvelopeFormatterResults = [
       },
     ],
     name: 'projectA',
+    policy: '',
     target: { name: 'projectA' },
   },
   {
@@ -158,6 +159,7 @@ export const expectedEnvelopeFormatterResults = [
       },
     ],
     name: 'projectB',
+    policy: '',
     target: { name: 'projectB' },
   },
 ];

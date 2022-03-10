@@ -21,7 +21,7 @@ describe('CLI Share Results', () => {
   });
 
   beforeEach(async () => {
-    await shareResults(scanResults);
+    await shareResults(scanResults, undefined);
   });
 
   afterEach(() => {
@@ -29,7 +29,7 @@ describe('CLI Share Results', () => {
     envelopeFormattersSpy.mockClear();
   });
 
-  it("converts the results to Envelops's ScanResult interface", () => {
+  it("converts the results to Envelope's ScanResult interface", () => {
     expect(envelopeFormattersSpy.mock.calls.length).toBe(2);
 
     const [firstCall, secondCall] = envelopeFormattersSpy.mock.calls;
