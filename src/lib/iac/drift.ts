@@ -81,6 +81,7 @@ interface DriftCTLOptions {
   'html-file-output'?: string;
   service?: string;
   from?: string; // snyk cli args parsing does not support variadic args so this will be coma separated values
+  ignore?: string[];
 }
 
 export const parseGenDriftIgnoreFlags = (
@@ -189,6 +190,11 @@ export const parseDescribeFlags = (options: DriftCTLOptions): string[] => {
   if (options['tf-lockfile']) {
     args.push('--tf-lockfile');
     args.push(options['tf-lockfile']);
+  }
+
+  if (options['ignore']) {
+    args.push('--ignore');
+    args.push(options['ignore'].join(','));
   }
 
   let configDir = cachePath;
