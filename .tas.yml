@@ -3,6 +3,7 @@ framework: jest
 
 preRun:
   command:
+    - npm install npm@8.10.0
     - npm install
     - npm run prepare
     - npm -v
