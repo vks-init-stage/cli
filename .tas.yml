@@ -3,7 +3,6 @@ framework: jest
 
 preRun:
   command:
-    - nvm install-latest-npm
     - npm install
     - npm run prepare
     - npm -v
@@ -13,3 +12,4 @@ postMerge:
 #     - "**/test/unit/*.spec.ts"
     - "/test/jest/unit/common.spec.ts"
 #     - "/test/jest/unit/**/*.spec.ts"
+#     - "/test/jest/unit/*.spec.ts"
