@@ -5,6 +5,7 @@ preRun:
   command:
     - npm install
     - npm run prepare
+    - npm -v
 
 postMerge:
   pattern:
