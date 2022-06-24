@@ -4,7 +4,7 @@ preRun:
   command:
     - npm ci
     - npm run prepare
-    - npm -v
+    - npm run build
 
 postMerge:
   pattern:
