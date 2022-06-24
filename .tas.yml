@@ -2,7 +2,7 @@ framework: jest
 
 preRun:
   command:
-    - npm install
+    - npm ci
     - npm run prepare
     - npm -v
 
