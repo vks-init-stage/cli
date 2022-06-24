@@ -1,4 +1,3 @@
----
 framework: jest
 
 preRun:
@@ -9,7 +8,6 @@ preRun:
 
 postMerge:
   pattern:
-#     - "**/test/unit/*.spec.ts"
-    - "/test/jest/unit/common.spec.ts"
-#     - "/test/jest/unit/**/*.spec.ts"
-#     - "/test/jest/unit/*.spec.ts"
+    - "**/test/unit/*.spec.ts"
+    - "/test/jest/unit/**/*.spec.ts"
+    - "/test/jest/unit/*.spec.ts"
